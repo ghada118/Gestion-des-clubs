@@ -1,0 +1,38 @@
+{% extends 'baseevent.html.twig' %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Liste des Événements</h1>
+
+    {% if events is empty %}
+        <div class="alert alert-warning text-center">
+            Aucun événement trouvé.
+        </div>
+    {% else %}
+        <div class="row">
+            {% for event in events %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <!-- Affichage de l'image de l'événement -->
+                        {% if event.image %}
+                            <img src="{{ asset('uploads/images/' ~ event.image) }}" alt="Image de l'événement" class="card-img-top" style="max-height: 200px; object-fit: cover;">
+                        {% endif %}
+                        <div class="card-body">
+                            <!-- Titre de l'événement -->
+                            <h5 class="card-title">{{ event.titreE }}</h5>
+                            <!-- Description de l'événement -->
+                            <p class="card-text">{{ event.descriptionE }}</p>
+                            <!-- Type d'événement -->
+                            <h6 class="card-subtitle mb-2 text-muted">Type : {{ event.typeEvenement.libelle }}</h6>
+                            <!-- Date de l'événement -->
+                            <p class="card-text">
+                                <strong>Date : </strong>{{ event.dateE ? event.dateE|date('d-m-Y') : 'Non spécifiée' }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

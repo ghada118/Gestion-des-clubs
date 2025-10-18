@@ -1,0 +1,126 @@
+{% extends 'dash.html.twig' %}
+
+{% block title %}Liste des Types d'Événements{% endblock %}
+
+{% block body %}
+    <h1>Liste des Types d'Événements</h1>
+
+    <table class="type-evenement-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for type in typeEvenements %}
+                <tr>
+                    <td>{{ type.id }}</td>
+                    <td>{{ type.libelle }}</td>
+                    <td>
+                        <div class="actions">
+                            <a class="edit-link" href="{{ path('type_evenement_modifier', {id: type.id}) }}">Modifier</a>
+                            <form action="{{ path('type_evenement_supprimer', {id: type.id}) }}" method="post" style="display:inline;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ type.id) }}">
+                                <button class="delete-btn" type="submit">Supprimer</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Boutons sous le tableau -->
+    <div class="action-buttons">
+        <a href="{{ path('type_evenement_ajout') }}" class="btn-add-type">Ajouter un type d'événement</a>
+    </div>
+
+    <style>
+        h1 {
+            font-size: 2rem;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .type-evenement-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .type-evenement-table th, .type-evenement-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .type-evenement-table th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .type-evenement-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .edit-link, .delete-btn {
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .edit-link {
+            background-color: #2980b9;
+            color: white;
+        }
+
+        .edit-link:hover {
+            background-color: #1c6b94;
+        }
+
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .action-buttons {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .action-buttons a {
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin: 0 10px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-add-type {
+            background-color: #2ecc71;
+        }
+
+        .action-buttons a:hover {
+            opacity: 0.9;
+        }
+    </style>
+{% endblock %}

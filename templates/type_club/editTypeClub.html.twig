@@ -1,0 +1,57 @@
+{% extends 'dash.html.twig' %}
+
+{% block title %}Modifier le Type de Club{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title text-center">Modifier le Type de Club</div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-8 mx-auto">
+                            {{ form_start(form) }}
+
+                            <div class="form-group">
+                                <label for="{{ form.categorieClub.vars.id }}" class="font-weight-bold">Catégorie du Club</label>
+                                {{ form_widget(form.categorieClub, { 
+                                    'attr': { 
+                                        'class': 'form-control', 
+                                        'maxlength': 15, 
+                                        'minlength': 2, 
+                                        'placeholder': 'Entrez le nom de la catégorie (2-15 caractères)' 
+                                    } 
+                                }) }}
+                                {{ form_errors(form.categorieClub) }}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="{{ form.descriptionCategClub.vars.id }}" class="font-weight-bold">Description</label>
+                                {{ form_widget(form.descriptionCategClub, { 
+                                    'attr': { 
+                                        'class': 'form-control', 
+                                        'maxlength': 50, 
+                                        'minlength': 5, 
+                                        'placeholder': 'Entrez une description (5-50 caractères)' 
+                                    } 
+                                }) }}
+                                {{ form_errors(form.descriptionCategClub) }}
+                            </div>
+
+                            <div class="card-action text-center">
+                                <button type="submit" class="btn btn-success">Mettre à jour</button>
+                                <a href="{{ path('app_afficher_type_club') }}" class="btn btn-secondary">Retour à la liste des types de clubs</a>
+                            </div>
+
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}{% endblock %}

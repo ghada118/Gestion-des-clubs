@@ -1,0 +1,197 @@
+{% extends 'dash.html.twig' %}
+
+{% block title %}
+    Modifier un Événement
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        h1 {
+            font-weight: bold;
+            text-align: center;
+            color: #007bff;
+            margin-top: 30px;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            border-color: #ccc;
+            padding: 10px;
+        }
+
+        .btn-submit {
+            background-color: #28a745;
+            border-color: #28a745;
+            color: white;
+            text-transform: uppercase;
+            font-weight: bold;
+            padding: 10px 20px;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-cancel {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: white;
+            text-transform: uppercase;
+            font-weight: bold;
+            padding: 10px 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .form-text {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+
+        .imagecheck {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            max-width: 200px;
+        }
+
+        .imagecheck-input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .imagecheck-figure {
+            margin: 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .imagecheck-image {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Modifier un Événement</div>
+        </div>
+        <div class="card-body">
+            {{ form_start(f, {'attr': {'enctype': 'multipart/form-data'}}) }}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ form_label(f.titreE, 'Titre de l\'événement') }}
+                        {{ form_widget(f.titreE, {'attr': {'class': 'form-control'}}) }}
+                        <!-- Afficher les erreurs pour le champ titreE -->
+                        {% if f.titreE.vars.errors|length > 0 %}
+                            <div class="text-danger">
+                                {{ form_errors(f.titreE) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ form_label(f.dateE, 'Date de l\'événement') }}
+                        {{ form_widget(f.dateE, {'attr': {'class': 'form-control'}}) }}
+                        <!-- Afficher les erreurs pour le champ dateE -->
+                        {% if f.dateE.vars.errors|length > 0 %}
+                            <div class="text-danger">
+                                {{ form_errors(f.dateE) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(f.descriptionE, 'Description') }}
+                {{ form_widget(f.descriptionE, {'attr': {'class': 'form-control'}}) }}
+                <!-- Afficher les erreurs pour le champ descriptionE -->
+                {% if f.descriptionE.vars.errors|length > 0 %}
+                    <div class="text-danger">
+                        {{ form_errors(f.descriptionE) }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(f.typeE, 'Type personnalisé') }}
+                {{ form_widget(f.typeE, {'attr': {'class': 'form-control'}}) }}
+                <!-- Afficher les erreurs pour le champ typeE -->
+                {% if f.typeE.vars.errors|length > 0 %}
+                    <div class="text-danger">
+                        {{ form_errors(f.typeE) }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(f.typeEvenement, 'Type(s) d\'événement') }}
+                {{ form_widget(f.typeEvenement, {'attr': {'class': 'form-control'}}) }}
+                <!-- Afficher les erreurs pour le champ typeEvenement -->
+                {% if f.typeEvenement.vars.errors|length > 0 %}
+                    <div class="text-danger">
+                        {{ form_errors(f.typeEvenement) }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(f.image, 'Changer l\'image') }}
+                {{ form_widget(f.image, {'attr': {'class': 'form-control'}}) }}
+                <!-- Afficher les erreurs pour le champ image -->
+                {% if f.image.vars.errors|length > 0 %}
+                    <div class="text-danger">
+                        {{ form_errors(f.image) }}
+                    </div>
+                {% endif %}
+                <small class="form-text text-muted">Formats acceptés : JPG, PNG</small>
+
+                {% if currentImage %}
+                    <div class="row mt-2">
+                        <div class="col-6 col-sm-4">
+                            <label class="imagecheck mb-4">
+                                <input name="currentImageCheck" type="checkbox" value="{{ currentImage }}" class="imagecheck-input" checked>
+                                <figure class="imagecheck-figure">
+                                    <img src="{{ asset('uploads/images/' ~ currentImage) }}" alt="Image actuelle" class="imagecheck-image">
+                                </figure>
+                            </label>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="card-action text-center">
+                {{ form_widget(f.save, {'attr': {'class': 'btn btn-success'}}) }}
+                {{ form_widget(f.reset, {'attr': {'class': 'btn btn-danger'}}) }}
+            </div>
+            {{ form_end(f) }}
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

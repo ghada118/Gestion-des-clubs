@@ -1,0 +1,145 @@
+{% extends 'dash.html.twig' %}
+
+{% block title %}Modifier une Formation{% endblock %}
+
+{% block body %}
+    <style>
+        /* Arrière-plan de la page */
+        body {
+            background-color: #f5f5f5; /* Gris clair */
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
+        /* Conteneur principal pour le formulaire */
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #ffffff; /* Blanc */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: #007BFF; /* Bleu */
+        }
+
+        .btn {
+            display: block;
+            width: auto;  /* Ajuste la largeur automatique des boutons */
+            margin-top: 15px;
+            padding: 8px 12px;  /* Réduit le padding pour des boutons plus petits */
+            font-size: 14px;  /* Réduit la taille de la police */
+            font-weight: bold;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-success {
+            background-color: #28a745; /* Vert */
+            border: none;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        /* Section pour les boutons centrés */
+        .action-buttons {
+            margin-top: 20px;  /* Réduit la marge entre les boutons et le formulaire */
+            display: flex;
+            justify-content: center;
+            gap: 10px;  /* Réduit l'espace entre les boutons */
+        }
+
+        .action-buttons a {
+            padding: 8px 16px;  /* Réduit le padding des boutons */
+            font-size: 14px;  /* Réduit la taille de la police des boutons */
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            color: white;
+        }
+
+        .btn-view-formations {
+            background-color: #007bff; /* Bleu */
+        }
+
+        .btn-view-formations:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-view-types {
+            background-color: #ff7f50; /* Orange corail */
+        }
+
+        .btn-view-types:hover {
+            background-color: #e5673f;
+        }
+
+        .btn-add-type {
+            background-color: #2ecc71; /* Vert clair */
+        }
+
+        .btn-add-type:hover {
+            background-color: #27ae60;
+        }
+
+        /* Section pour les dates centrées */
+        .date-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .date-item {
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .date-item span {
+            display: block;
+            font-weight: bold;
+        }
+    </style>
+
+    <div class="form-container">
+        <h1>Modifier la Formation</h1>
+
+        {{ form_start(form) }}
+            <div class="mb-3">
+                {{ form_row(form.titre, { 'label': 'Titre de la formation', 'attr': { 'class': 'form-control' } }) }}
+            </div>
+            <div class="mb-3">
+                {{ form_row(form.description, { 'label': 'Description', 'attr': { 'class': 'form-control' } }) }}
+            </div>
+            <div class="mb-3">
+                {{ form_row(form.datePub, { 'label': 'Date de publication', 'attr': { 'class': 'form-control' } }) }}
+            </div>
+            <div class="mb-3">
+                {{ form_row(form.dateLimite, { 'label': 'Date limite', 'attr': { 'class': 'form-control' } }) }}
+            </div>
+            <div class="mb-3">
+                {{ form_row(form.typeformation, { 'label': 'Type de formation', 'attr': { 'class': 'form-control' } }) }}
+            </div>
+            <div class="mb-3">
+                {{ form_row(form.image, { 'label': 'Image (JPEG, PNG, GIF)', 'attr': { 'class': 'form-control' } }) }}
+            </div>
+
+            <button type="submit" class="btn btn-success">Enregistrer les modifications</button>
+        {{ form_end(form) }}
+    </div>
+
+    <!-- Boutons centrés sous le formulaire -->
+    <div class="action-buttons">
+        <a href="{{ path('app_affiche_formation') }}" class="btn btn-view-formations">Afficher la liste des formations</a>
+        <a href="{{ path('type_formation_affiche') }}" class="btn btn-view-types">Afficher la liste des types de formation</a>
+        <a href="{{ path('type_formation_ajout') }}" class="btn btn-add-type">Ajouter un type de formation</a>
+    </div>
+{% endblock %}

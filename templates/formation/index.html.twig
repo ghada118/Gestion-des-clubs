@@ -1,0 +1,9 @@
+{% extends 'basedash.html.twig' %}
+
+{% block body %}
+    <h1 style="font-size: 24px; color: #333;">Gestion des Formations</h1>
+    <p style="font-size: 18px; color: #666;">Nombre total de formations : {{ totalFormations }}</p>
+    <a href="{{ path('app_affiche_formation') }}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px; transition: background-color 0.3s;">
+        Voir les formations
+    </a>
+{% endblock %}

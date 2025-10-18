@@ -1,0 +1,57 @@
+{% extends 'baseaceuil.html.twig' %}
+
+{% block title %}Inscription aux Clubs{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center my-4">Inscription aux Clubs</h1>
+
+    {# Afficher les messages flash #}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    {# Formulaire d'inscription #}
+    {{ form_start(form) }}
+
+    <div class="form-group mb-3">
+        {# Champ pour le nom de l'étudiant #}
+        {{ form_label(form.name, 'Votre nom', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.name) }}
+    </div>
+
+    <div class="form-group mb-3">
+        {# Champ pour l'email de l'étudiant #}
+        {{ form_label(form.email, 'Votre email', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.email) }}
+    </div>
+
+    <div class="form-group mb-3">
+        {# Liste des clubs #}
+        <label class="form-label">Sélectionnez les clubs :</label>
+        <ul class="list-unstyled">
+            {% for choice in form.clubs %}
+                <li class="form-check">
+                    {{ form_widget(choice, {'attr': {'class': 'form-check-input'}}) }}
+                    {{ form_label(choice, null, {'label_attr': {'class': 'form-check-label'}}) }}
+                </li>
+            {% endfor %}
+        </ul>
+        <small class="form-text text-muted">
+            Vous pouvez choisir plusieurs clubs.
+        </small>
+    </div>
+
+    <div class="form-group mt-4">
+        <button type="submit" class="btn btn-primary">Envoyer la demande</button>
+    </div>
+
+    {{ form_end(form) }}
+</div>
+{% endblock %}

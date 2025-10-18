@@ -1,0 +1,153 @@
+{% extends 'dash.html.twig' %}
+
+{% block title %}Liste des Types de Formation{% endblock %}
+
+{% block body %}
+    <h1>Liste des Types de Formation</h1>
+
+    <table class="type-formation-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for type in typeFormations %}
+                <tr>
+                    <td>{{ type.id }}</td>
+                    <td>{{ type.libelle }}</td>
+                    <td>
+                        <div class="actions">
+                            <a class="edit-link" href="{{ path('type_formation_modifier', {id: type.id}) }}">Modifier</a>
+                            <form action="{{ path('type_formation_supprimer', {id: type.id}) }}
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ type.id) }}">
+                                <button class="delete-btn" type="submit">Supprimer</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">Aucun type de formation trouvé</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="action-buttons">
+        <a href="{{ path('type_formation_ajout') }}" class="btn-add-type">Ajouter un type de formation</a>
+        <a href="{{ path('app_ajout_formation') }}" class="btn-add-formation">Ajouter une formation</a>
+        <a href="{{ path('app_affiche_formation') }}" class="btn-view-formations">Afficher la liste des formations</a>
+    </div>
+
+    <style>
+        h1 {
+            font-size: 2rem;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .type-formation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .type-formation-table th, .type-formation-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .type-formation-table th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .type-formation-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .edit-link, .delete-btn {
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .edit-link {
+            background-color: #2980b9;
+            color: white;
+        }
+
+        .edit-link:hover {
+            background-color: #1c6b94;
+        }
+
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .action-buttons {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .action-buttons a {
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin: 0 10px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-add-type {
+            background-color: #2ecc71;
+        }
+
+        .btn-add-formation {
+            background-color: #3498db;
+        }
+
+        .btn-view-formations {
+            background-color: #e67e22;
+        }
+
+        .action-buttons a:hover {
+            opacity: 0.9;
+        }
+    </style>
+
+    <script>
+        function confirmDelete(event, typeName, formationsCount) {
+            let message = "Êtes-vous sûr de vouloir supprimer le type de formation \"" + typeName + "\" ?";
+            if (formationsCount > 0) {
+                message = "Le type de formation \"" + typeName + "\" est utilisé dans " + formationsCount + " formation(s). Êtes-vous sûr de vouloir le supprimer ?";
+            }
+            const confirmation = confirm(message);
+            if (!confirmation) {
+                event.preventDefault(); // Annuler la soumission du formulaire si l'utilisateur annule
+            }
+        }
+    </script>
+
+{% endblock %}

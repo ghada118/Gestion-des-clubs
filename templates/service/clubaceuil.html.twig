@@ -1,0 +1,62 @@
+{% extends 'baseaceuil.html.twig' %}
+
+{% block title %}Accueil des Clubs{% endblock %}
+
+{% block body %}
+<h1 class="text-center my-4">Nos Clubs</h1>
+
+<div class="container">
+    <div class="row mb-4">
+        <!-- Barre de recherche -->
+        <div class="col-lg-8 mb-4 mb-lg-0">
+            <form action="{{ path('app_recherche_clubs') }}" method="get" class="d-flex search-form">
+                <!-- Champ de recherche -->
+                <input type="search" name="search" class="form-control mr-2" placeholder="Search clubs" value="{{ app.request.query.get('search') }}">
+                <!-- Filtre par type de club -->
+                <select name="type" class="form-control mr-2">
+                    <option value="">-- Filtrer par Type --</option>
+                    <option value="Informatique" {% if app.request.query.get('type') == 'Informatique' %}selected{% endif %}>Informatique</option>
+                    <option value="Sport" {% if app.request.query.get('type') == 'Sport' %}selected{% endif %}>Sport</option>
+                    <option value="Culture" {% if app.request.query.get('type') == 'Culture' %}selected{% endif %}>Culture</option>
+                    <!-- Ajouter d'autres types ici -->
+                </select>
+                <input type="submit" class="btn btn-primary px-4" value="Search">
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        {% if clubs is not empty %}
+            {% for club in clubs %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <a href="#">
+                            {% if club.image %}
+                                <img src="{{ asset('uploads/images/' ~ club.image) }}" 
+                                     class="img-fluid card-img-top"
+                                     style="width: 100%; height: 350px; object-fit: cover;" 
+                                     alt="Image de {{ club.name }}">
+                            {% else %}
+                                <img src="{{ asset('img/default-club.jpg') }}" 
+                                     class="img-fluid card-img-top"
+                                     style="width: 100%; height: 350px; object-fit: cover;" 
+                                     alt="Image par défaut">
+                            {% endif %}
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{ club.name }}</h5>
+                            <p class="card-text text-justify">{{ club.description }}</p>
+                            <p class="text-muted text-end">
+                                <small>Date de création : {{ club.dateCreation|date('d-m-Y') }}</small><br>
+                                <small>Type : {{ club.type.categorieClub }}</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center">Aucun club trouvé pour ces critères.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

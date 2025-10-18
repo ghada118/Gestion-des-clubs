@@ -1,0 +1,22 @@
+{% extends 'dash.html.twig' %}
+
+{% block title %}Résultats de recherche{% endblock %}
+
+{% block body %}
+<h1>Résultats pour "{{ keyword }}"</h1>
+
+{% if evenements is empty %}
+    <p>Aucun événement trouvé.</p>
+{% else %}
+    <ul>
+        {% for evenement in evenements %}
+            <li>
+                <h2>{{ evenement.titreE }}</h2>
+                <p>{{ evenement.descriptionE }}</p>
+                <p>Date : {{ evenement.dateE|date('d/m/Y') }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+<a href="{{ path('app_AfficheA') }}">Retour à la liste des événements</a>
+{% endblock %}

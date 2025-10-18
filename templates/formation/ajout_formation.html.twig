@@ -1,0 +1,205 @@
+{% extends 'dash.html.twig' %}
+
+{% block title %}Ajouter une Formation{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            background-color: #f5f5f5; /* Gris clair */
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #ffffff; /* Blanc */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: #007BFF; /* Bleu */
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            padding: 10px 15px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-success {
+            background-color: #28a745; /* Vert */
+            border: none;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .text-danger {
+            color: #dc3545; /* Rouge pour les erreurs */
+            font-size: 0.875rem;
+            margin-top: 5px;
+        }
+
+        .form-control.is-invalid {
+            border-color: #dc3545; /* Rouge pour la bordure */
+            background-color: #f8d7da; /* Fond léger rouge */
+        }
+
+        .form-control.is-valid {
+            border-color: #28a745; /* Bordure verte */
+            background-color: transparent;
+        }
+
+        .action-buttons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .action-buttons a {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            color: white;
+        }
+
+        .btn-view-formations {
+            background-color: #007bff; /* Bleu */
+        }
+
+        .btn-view-formations:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-view-types {
+            background-color: #ff7f50; /* Orange corail */
+        }
+
+        .btn-view-types:hover {
+            background-color: #e5673f;
+        }
+
+        .btn-add-type {
+            background-color: #2ecc71; /* Vert clair */
+        }
+
+        .btn-add-type:hover {
+            background-color: #27ae60;
+        }
+    </style>
+
+    <div class="form-container">
+        <h1>Ajouter une Formation</h1>
+
+        {{ form_start(f) }}
+        
+        <div class="mb-3">
+            {{ form_row(f.titre, {
+                'label': 'Titre de la formation',
+                'attr': {
+                    'class': 'form-control'
+                }
+            }) }}
+            <div class="text-danger">{{ form_errors(f.titre) }}</div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_row(f.description, {
+                'label': 'Description de la formation',
+                'attr': {
+                    'class': 'form-control'
+                }
+            }) }}
+            <div class="text-danger">{{ form_errors(f.description) }}</div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_row(f.datePub, {
+                'label': 'Date de publication',
+                'attr': {
+                    'class': 'form-control'
+                }
+            }) }}
+            <div class="text-danger">{{ form_errors(f.datePub) }}</div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_row(f.dateLimite, {
+                'label': 'Date limite',
+                'attr': {
+                    'class': 'form-control'
+                }
+            }) }}
+            <div class="text-danger">{{ form_errors(f.dateLimite) }}</div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_row(f.typeformation, {
+                'label': 'Type de formation',
+                'attr': {
+                    'class': 'form-control'
+                }
+            }) }}
+            <div class="text-danger">{{ form_errors(f.typeformation) }}</div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_row(f.image, {
+                'label': 'Image de la formation',
+                'attr': {
+                    'class': 'form-control'
+                }
+            }) }}
+            <div class="text-danger">{{ form_errors(f.image) }}</div>
+        </div>
+
+        <button id="submit-btn" type="submit" class="btn btn-success">Ajouter</button>
+        
+        {{ form_end(f) }}
+    </div>
+
+    <div class="action-buttons">
+        <a href="{{ path('app_affiche_formation') }}" class="btn btn-view-formations">Afficher la liste des formations</a>
+        <a href="{{ path('type_formation_affiche') }}" class="btn btn-view-types">Afficher la liste des types de formation</a>
+        <a href="{{ path('type_formation_ajout') }}" class="btn btn-add-type">Ajouter un type de formation</a>
+    </div>
+
+    <script>
+        // Efface les couleurs des champs lorsqu'on quitte ou recharge la page
+        window.addEventListener('beforeunload', function () {
+            document.querySelectorAll('.form-control.is-valid, .form-control.is-invalid').forEach(function (input) {
+                input.classList.remove('is-valid', 'is-invalid');
+            });
+        });
+
+        // Ajoute les classes 'is-valid' ou 'is-invalid' après un clic sur le bouton "Ajouter"
+        document.getElementById('submit-btn').addEventListener('click', function (event) {
+            document.querySelectorAll('.form-control').forEach(function (input) {
+                if (input.checkValidity()) {
+                    input.classList.add('is-valid');
+                    input.classList.remove('is-invalid');
+                } else {
+                    input.classList.add('is-invalid');
+                    input.classList.remove('is-valid');
+                }
+            });
+        });
+    </script>
+{% endblock %}

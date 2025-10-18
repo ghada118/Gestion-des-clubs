@@ -1,0 +1,113 @@
+{% extends 'dash.html.twig' %}
+
+{% block title %}Ajouter un Type de Formation{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un Type de Formation</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }} <!-- Ceci génère tous les champs du formulaire, y compris le bouton Enregistrer -->
+    {{ form_end(form) }}
+
+    <!-- Boutons pour naviguer entre les pages -->
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="{{ path('app_affiche_formation') }}" style="margin-right: 15px;">
+            <button style="background-color: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem; font-weight: bold;">Afficher la liste des formations</button>
+        </a>
+        <a href="{{ path('app_ajout_formation') }}" style="margin-right: 15px;">
+            <button style="background-color: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem; font-weight: bold;">Ajouter une formation</button>
+        </a>
+        <a href="{{ path('type_formation_affiche') }}">
+            <button style="background-color: #e67e22; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem; font-weight: bold;">Afficher les types de formation</button>
+        </a>
+    </div>
+
+    <style>
+        /* Style pour le titre */
+        h1 {
+            font-size: 2rem;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Style pour le formulaire */
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #dcdcdc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style pour les champs de formulaire */
+        form input, 
+        form select, 
+        form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        /* Style pour le bouton Enregistrer */
+        form button {
+            display: block;
+            width: 100%;
+            padding: 10px 0;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Style pour les autres boutons */
+        .button-container a button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .button-container a button:first-child {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .button-container a button:first-child:hover {
+            background-color: #2980b9;
+        }
+
+        .button-container a button:nth-child(2) {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .button-container a button:nth-child(2):hover {
+            background-color: #218838;
+        }
+
+        .button-container a button:last-child {
+            background-color: #e67e22;
+            color: white;
+        }
+
+        .button-container a button:last-child:hover {
+            background-color: #d35400;
+        }
+    </style>
+{% endblock %}

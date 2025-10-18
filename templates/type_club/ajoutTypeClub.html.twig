@@ -1,0 +1,77 @@
+{% extends 'dash.html.twig' %}
+
+{% block title %}Ajouter un Type de Club{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title text-center">Ajouter un Type de Club</div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-8 mx-auto">
+                            {{ form_start(form, { 'attr': { 'enctype': 'multipart/form-data', 'novalidate': 'novalidate' } }) }}
+
+                            {# Champ "Catégorie de Club" #}
+                            <div class="form-group 
+                                {% if form.categorieClub.vars.valid is defined %}
+                                    {{ form.categorieClub.vars.valid ? 'has-success' : 'has-error' }}
+                                {% endif %}
+                            ">
+                                <label for="{{ form.categorieClub.vars.id }}" class="col-md-3 col-form-label font-weight-bold">Nom de la Catégorie</label>
+                                <div class="col-md-9 p-0">
+                                    {{ form_widget(form.categorieClub, {
+                                        'attr': {
+                                            'class': 'form-control input-full',
+                                            'placeholder': 'Nom de la catégorie (2-15 caractères)'
+                                        }
+                                    }) }}
+                                    {{ form_errors(form.categorieClub) }}
+                                    {% if form.categorieClub.vars.valid is defined and not form.categorieClub.vars.valid %}
+                                        <small id="errorHelp" class="form-text text-muted">
+                                            Veuillez fournir une information valide.
+                                        </small>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            {# Champ "Description de la Catégorie" #}
+                            <div class="form-group 
+                                {% if form.descriptionCategClub.vars.valid is defined %}
+                                    {{ form.descriptionCategClub.vars.valid ? 'has-success' : 'has-error' }}
+                                {% endif %}
+                            ">
+                                <label for="{{ form.descriptionCategClub.vars.id }}" class="font-weight-bold">Description</label>
+                                {{ form_widget(form.descriptionCategClub, {
+                                    'attr': {
+                                        'class': 'form-control',
+                                        'rows': '5',
+                                        'placeholder': 'Description (5-50 caractères)'
+                                    }
+                                }) }}
+                                {{ form_errors(form.descriptionCategClub) }}
+                                {% if form.descriptionCategClub.vars.valid is defined and not form.descriptionCategClub.vars.valid %}
+                                    <small id="errorHelp" class="form-text text-muted">
+                                        Veuillez fournir une information valide.
+                                    </small>
+                                {% endif %}
+                            </div>
+
+                            <div class="card-action text-center">
+                                <button type="submit" class="btn btn-success">Enregistrer</button>
+                                <a href="{{ path('app_afficher_type_club') }}" class="btn btn-secondary">Retour à la liste des types de clubs</a>
+                            </div>
+
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'dash.html.twig' %}
+
+{% block title %}Liste des Types de Club{% endblock %}
+
+{% block body %}
+<h1 class="text-center">Liste des Types de Club</h1>
+
+<!-- Button to create a new Type Club -->
+<a href="{{ path('app_ajout_type_club') }}" class="btn btn-primary mb-3">Créer un Nouveau Type Club</a>
+
+<div class="card mt-4">
+    <div class="card-header">
+        <div class="card-title">Liste des Types de Club</div>
+    </div>
+    <div class="card-body">
+        <!-- Table with colored header -->
+        <table class="table table-head-bg-success">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Catégorie</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for typeClub in typeClubs %}
+                    <tr>
+                        <td>{{ typeClub.id }}</td>
+                        <td>{{ typeClub.categorieClub }}</td>
+                        <td>{{ typeClub.descriptionCategClub }}</td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <!-- Edit button: links to the edit route with the current typeClub id -->
+                                <a href="{{ path('app_edit_type_club', { id: typeClub.id }) }}" class="btn btn-warning btn-sm">Modifier</a>
+
+                                <!-- Delete button: form to handle deletion with CSRF token -->
+                                <form action="{{ path('app_delete_type_club', { id: typeClub.id }) }}" method="POST" style="display: inline;">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ typeClub.id) }}">
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr(e) de vouloir supprimer ce type de club ? Tous les clubs associés à ce type seront également supprimés.')">Supprimer</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">Aucun type de club trouvé.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'dash.html.twig' %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Liste des Événements</h1>
+
+        {% if evenement is empty %}
+            <div class="alert alert-warning text-center">
+                Aucun événement trouvé. <a href="{{ path('app_AjoutA') }}">Ajouter un événement</a>
+            </div>
+        {% else %}
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Titre</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Image</th>
+                        <th scope="col" class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for event in evenement %}
+                        <tr>
+                            <th scope="row">{{ loop.index }}</th>
+                            <td>{{ event.titreE }}</td>
+                            <td>{{ event.dateE ? event.dateE|date('Y-m-d') : 'N/A' }}</td>
+                            <td>{{ event.descriptionE }}</td>
+                            <td>{{ event.typeEvenement.libelle }}</td>
+                            <td>
+                                {% if event.image %}
+                                    <img src="{{ asset('uploads/images/' ~ event.image) }}" alt="Image de l'événement" style="max-width: 100px;">
+                                {% else %}
+                                    <span>Aucune image</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <!-- Boutons pour modifier et supprimer -->
+                                <a href="{{ path('app_ModifierA', { id: event.id }) }}" class="btn btn-warning btn-sm">Modifier</a>
+                                <a href="{{ path('app_SupprimeA', { id: event.id }) }}" class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet événement ?');">
+                                    Supprimer
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        <div class="text-center mt-4">
+            <a href="{{ path('app_AjoutA') }}" class="btn btn-primary">Ajouter un nouvel événement</a>
+        </div>
+    </div>
+{% endblock %}

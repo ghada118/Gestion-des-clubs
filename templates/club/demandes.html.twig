@@ -1,0 +1,36 @@
+{% extends 'dash.html.twig' %}
+
+{% block title %}Demandes des Clubs{% endblock %}
+
+{% block body %}
+    <h1>Demandes en Attente</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom de l'Étudiant</th>
+                <th>Email de l'Étudiant</th>
+                <th>Club</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for demande in demandes %}
+                <tr>
+                    <td>{{ demande.etudiant.name }}</td>
+                    <td>{{ demande.etudiant.email }}</td>  {# Afficher l'email de l'étudiant #}
+                    <td>{{ demande.club.name }}</td>
+                    <td>{{ demande.statut }}</td>
+                    <td>
+                        <a href="{{ path('app_traiter_demande', {idClub: demande.club.id, idDemande: demande.id, statut: 'acceptée'}) }}" class="btn btn-success">Accepter</a>
+                        <a href="{{ path('app_traiter_demande', {idClub: demande.club.id, idDemande: demande.id, statut: 'refusée'}) }}" class="btn btn-danger">Refuser</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Aucune demande en attente.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

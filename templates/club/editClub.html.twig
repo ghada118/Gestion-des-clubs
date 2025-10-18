@@ -1,0 +1,125 @@
+{% extends 'dash.html.twig' %}
+
+{% block title %}Modifier un Club{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title text-center">Modifier un Club</div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-8 mx-auto">
+                            {{ form_start(form, { 'attr': { 'enctype': 'multipart/form-data', 'novalidate': 'novalidate' } }) }}
+
+                            <div class="form-group 
+                                {% if form.name.vars.errors|length > 0 %}
+                                    has-error has-feedback
+                                {% elseif form.name.vars.valid %}
+                                    has-success
+                                {% endif %}">
+                                <label for="{{ form.name.vars.id }}" class="col-md-3 col-form-label font-weight-bold">Nom du club</label>
+                                <div class="col-md-9 p-0">
+                                    {{ form_widget(form.name, { 'attr': { 'class': 'form-control input-full', 'placeholder': 'Nom du club' } }) }}
+                                    {% if form.name.vars.errors|length > 0 %}
+                                        <small class="form-text text-muted">{{ form_errors(form.name) }}</small>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="form-group 
+                                {% if form.description.vars.errors|length > 0 %}
+                                    has-error has-feedback
+                                {% elseif form.description.vars.valid %}
+                                    has-success
+                                {% endif %}">
+                                <label for="{{ form.description.vars.id }}" class="font-weight-bold">Description</label>
+                                {{ form_widget(form.description, { 'attr': { 'class': 'form-control', 'rows': '5', 'placeholder': 'Description' } }) }}
+                                {% if form.description.vars.errors|length > 0 %}
+                                    <small class="form-text text-muted">{{ form_errors(form.description) }}</small>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group 
+                                {% if form.dateCreation.vars.errors|length > 0 %}
+                                    has-error has-feedback
+                                {% elseif form.dateCreation.vars.valid %}
+                                    has-success
+                                {% endif %}">
+                                <label for="{{ form.dateCreation.vars.id }}" class="col-md-3 col-form-label font-weight-bold">Date de création</label>
+                                <div class="col-md-9 p-0">
+                                    {{ form_widget(form.dateCreation, { 'attr': { 'class': 'form-control' } }) }}
+                                    {% if form.dateCreation.vars.errors|length > 0 %}
+                                        <small class="form-text text-muted">{{ form_errors(form.dateCreation) }}</small>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="form-group 
+                                {% if form.type.vars.errors|length > 0 %}
+                                    has-error has-feedback
+                                {% elseif form.type.vars.valid %}
+                                    has-success
+                                {% endif %}">
+                                <label for="{{ form.type.vars.id }}" class="font-weight-bold">Type du club</label>
+                                {{ form_widget(form.type, { 'attr': { 'class': 'form-control' } }) }}
+                                {% if form.type.vars.errors|length > 0 %}
+                                    <small class="form-text text-muted">{{ form_errors(form.type) }}</small>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group 
+                                {% if form.image.vars.errors|length > 0 %}
+                                    has-error has-feedback
+                                {% elseif form.image.vars.valid %}
+                                    has-success
+                                {% endif %}">
+                                <label for="{{ form.image.vars.id }}" class="font-weight-bold">Image du club</label>
+                                {{ form_widget(form.image, { 'attr': { 'class': 'form-control' } }) }}
+                                {% if form.image.vars.errors|length > 0 %}
+                                    <small class="form-text text-muted">{{ form_errors(form.image) }}</small>
+                                {% endif %}
+                            </div>
+
+                            {# Afficher l'image existante si elle est définie #}
+                            {% if club.image %}
+                                <div class="form-group text-center">
+                                    <label class="font-weight-bold">Image actuelle</label>
+                                    <img src="{{ asset('uploads/images/' ~ club.image) }}" alt="Image de {{ club.name }}" class="img-fluid mt-3" style="max-width: 100px;">
+                                </div>
+                            {% endif %}
+
+                            {# Champ places disponibles ajouté ici #}
+                            <div class="form-group 
+                                {% if form.placesDisponibles.vars.errors|length > 0 %}
+                                    has-error has-feedback
+                                {% elseif form.placesDisponibles.vars.valid %}
+                                    has-success
+                                {% endif %}">
+                                <label for="{{ form.placesDisponibles.vars.id }}" class="font-weight-bold">Places disponibles</label>
+                                <div class="col-md-9 p-0">
+                                    {{ form_widget(form.placesDisponibles, { 'attr': { 'class': 'form-control', 'placeholder': 'Nombre de places disponibles' } }) }}
+                                    {% if form.placesDisponibles.vars.errors|length > 0 %}
+                                        <small class="form-text text-muted">{{ form_errors(form.placesDisponibles) }}</small>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="card-action text-center">
+                                <button type="submit" class="btn btn-success">Enregistrer</button>
+                                <a href="{{ path('app_afficheClub') }}" class="btn btn-secondary">Retour à la liste des clubs</a>
+                            </div>
+
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

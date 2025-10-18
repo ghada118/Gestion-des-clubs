@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demandes de l'étudiant{% endblock %}
+
+{% block body %}
+    <h1>Demandes d'inscription de l'étudiant ID: {{ etudiant_id }}</h1>
+
+    {% if results is not empty %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Nom du club</th>
+                    <th>Statut</th>
+                    <th>Commentaire</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                    <tr>
+                        <td>{{ result.club_name }}</td>
+                        <td>{{ result.statut }}</td>
+                        <td>{{ result.commentaire ?: 'Aucun commentaire' }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucune demande trouvée pour cet étudiant.</p>
+    {% endif %}
+{% endblock %}

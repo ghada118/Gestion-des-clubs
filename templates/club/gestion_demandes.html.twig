@@ -1,0 +1,23 @@
+{# templates/responsable/gestion_demandes.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des demandes{% endblock %}
+
+{% block body %}
+    <h1>Demandes d'inscription pour le club : {{ club.name }}</h1>
+
+    {# Afficher les demandes d'inscription #}
+    {% for etudiant in demandes %}
+        <div class="etudiant">
+            <p>Nom : {{ etudiant.nom }}</p>
+            <p>Email : {{ etudiant.email }}</p>
+
+            {# Boutons pour accepter ou refuser la demande #}
+            <a href="{{ path('responsable_accepter_demande', {'etudiantId': etudiant.id, 'clubId': club.id}) }}" class="btn btn-success">Accepter</a>
+            <a href="{{ path('responsable_refuser_demande', {'etudiantId': etudiant.id, 'clubId': club.id}) }}" class="btn btn-danger">Refuser</a>
+        </div>
+    {% else %}
+        <p>Aucune demande en attente.</p>
+    {% endfor %}
+{% endblock %}

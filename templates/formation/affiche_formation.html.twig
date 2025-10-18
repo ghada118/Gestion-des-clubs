@@ -1,0 +1,210 @@
+{% extends 'dash.html.twig' %}
+
+{% block body %}
+
+    <style>
+        /* Style global */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Style du tableau */
+        .formation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .formation-table th, .formation-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .formation-table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .formation-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Style des liens d'action */
+        .btn-container {
+            display: flex;
+            gap: 10px; /* Espace entre les boutons */
+        }
+
+        .btn-edit, .btn-delete {
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        .btn-edit {
+            background-color: #4CAF50;
+        }
+
+        .btn-delete {
+            background-color: #f44336;
+        }
+
+        /* Hover effect */
+        .btn-edit:hover {
+            background-color: #45a049;
+        }
+
+        .btn-delete:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Style des boutons sous le tableau */
+        .action-buttons {
+            text-align: center;
+            margin-top: 40px; /* Ajout d'un espace supplémentaire */
+        }
+
+        .action-buttons a {
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin: 0 10px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .action-buttons .btn-add-formation {
+            background-color: #3498db;
+        }
+
+        .action-buttons .btn-add-type-formation {
+            background-color: #28a745;
+        }
+
+        .action-buttons .btn-view-types {
+            background-color: #e67e22;
+        }
+
+        .action-buttons a:hover {
+            opacity: 0.9;
+        }
+
+        /* Style de l'image dans le tableau */
+        .formation-image {
+            width: 100px;
+            height: auto;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .no-image {
+            color: #999;
+            font-style: italic;
+        }
+
+        /* Style de la barre de recherche */
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            width: 300px;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            font-size: 1rem;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+
+        .search-bar button:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+    <!-- Barre de recherche -->
+    <div class="search-bar">
+        <form method="GET" action="{{ path('app_search_formation') }}">
+            <input type="text" name="title" placeholder="Rechercher par titre...">
+            <button type="submit">Rechercher</button>
+        </form>
+    </div>
+
+    <!-- Liste de toutes les formations -->
+    <h1>Liste des Formations</h1>
+    <table class="formation-table">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Date de Publication</th>
+                <th>Date Limite</th>
+                <th>Description</th>
+                <th>Type de Formation</th> <!-- Nouvelle colonne pour le type -->
+                <th>Image</th> <!-- Nouvelle colonne pour l'image -->
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for formation in formations %}
+            <tr>
+                <td>{{ formation.titre }}</td>
+                <td>{{ formation.datepub|date('d/m/Y') }}</td>
+                <td>{{ formation.dateLimite|date('d/m/Y') }}</td>
+                <td>{{ formation.description }}</td>
+                <td>{{ formation.typeformation.libelle }}</td>
+                
+                <!-- Affichage de l'image -->
+                <td>
+                    {% if formation.image %}
+                        <img src="{{ asset('uploads/' ~ formation.image) }}" alt="Image de la formation" class="formation-image">
+                    {% else %}
+                        <span class="no-image">Aucune image</span>
+                    {% endif %}
+                </td>
+
+                <td>
+                    <div class="btn-container">
+                        <!-- Bouton Modifier -->
+                        <a href="{{ path('Modifier_formation', { id: formation.id }) }}" class="btn btn-primary">Modifier</a>
+                        <a href="{{ path('formation_supprimer', {'id': formation.id}) }}" class="btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette formation ?');">Supprimer</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Boutons d'action sous le tableau -->
+    <div class="action-buttons">
+        <a href="{{ path('app_ajout_formation') }}" class="btn-add-formation">Ajouter une formation</a>
+        <a href="{{ path('type_formation_ajout') }}" class="btn-add-type-formation">Ajouter un type de formation</a>
+        <a href="{{ path('type_formation_affiche') }}" class="btn-view-types">Afficher les types de formation</a>
+    </div>
+
+{% endblock %}

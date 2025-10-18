@@ -1,0 +1,34 @@
+{% extends 'baseaceuil.html.twig' %}
+
+{% block title %}Gestion des Demandes{% endblock %}
+
+{% block body %}
+<h1>Gestion des Demandes</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Étudiant</th>
+            <th>Club</th>
+            <th>Statut</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for demande in demandes %}
+            <tr>
+                <td>{{ demande.etudiant.name }} </td>
+                <td>{{ demande.club.name }}</td>
+                <td>
+                    {% if demande.statut == 'en attente' %}
+                        <span style="color: orange;">En attente</span>
+                    {% elseif demande.statut == 'acceptée' %}
+                        <span style="color: green;">Acceptée</span>
+                    {% elseif demande.statut == 'refusée' %}
+                        <span style="color: red;">Refusée</span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
